@@ -7,7 +7,7 @@ from typing import Dict
 
 from langchain_community.llms import HuggingFacePipeline
 from langchain_core.language_models import BaseLanguageModel
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, AIMessage
 
 from app.models import ChatRequest, ChatResponse
 from app.retriever import load_documents, create_vector_store, get_retriever
@@ -163,7 +163,6 @@ async def chat(request: ChatRequest):
             response_text = "Извините, я не могу ответить на этот вопрос."
         
         # Обновляем историю сессии
-        from langchain_core.messages import AIMessage
         session_store[session_id].append(AIMessage(content=response_text))
         
         # Ограничиваем размер истории (последние 10 сообщений)
