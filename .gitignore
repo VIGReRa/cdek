@@ -1,0 +1,60 @@
+```
+# Dependencies
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+.venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.env
+.env.local
+.env.*
+.env~*
+.ENV
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+.coverage
+htmlcov/
+.coverage.*
+.coverage.xml
+.pytest_cache/
+.mypy_cache/
+.hypothesis/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Icon?
+*.nfs*
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+```
