@@ -1,16 +1,16 @@
 import os
 from typing import List, Dict
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from app.llm_config import get_embeddings
 
-DATA_DIR = "/app/data"
+DATA_DIR = "data"
 
 def load_documents() -> List[Document]:
     """Загружает все текстовые файлы из папки data."""
     documents = []
-    
+
     file_mapping = {
         "general_info.txt": "Общая информация",
         "deadlines.txt": "Сроки и дедлайны",
@@ -18,7 +18,7 @@ def load_documents() -> List[Document]:
         "germany_rules.txt": "Правила для Германии",
         "france_rules.txt": "Правила для Франции"
     }
-    
+
     for filename, source_name in file_mapping.items():
         filepath = os.path.join(DATA_DIR, filename)
         if os.path.exists(filepath):
@@ -30,26 +30,32 @@ def load_documents() -> List[Document]:
                         metadata={"source": source_name, "filename": filename}
                     )
                 )
-    
+
     return documents
 
 def create_vector_store(documents: List[Document]) -> Chroma:
     """Создает векторное хранилище из документов."""
+    if not documents:
+        raise ValueError("No documents loaded to create vector store")
+
     text_splitter = CharacterTextSplitter(
         chunk_size=500,
         chunk_overlap=50,
         separator="\n"
     )
     chunks = text_splitter.split_documents(documents)
-    
+
+    if not chunks:
+        raise ValueError("No text chunks created from documents")
+
     embeddings = get_embeddings()
-    
+
     vectorstore = Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
-        persist_directory="/app/chroma_db"
+        persist_directory="chroma_db"
     )
-    
+
     return vectorstore
 
 def get_retriever(vectorstore: Chroma):
