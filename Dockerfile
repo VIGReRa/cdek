@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Копирование requirements.txt и установка зависимостей
+# Копирование requirements и установка зависимостей
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -16,11 +16,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ ./app/
 COPY data/ ./data/
 
-# Переменная окружения для Python
-ENV PYTHONPATH=/app
+# Переменная окружения для Python (буферизация вывода)
 ENV PYTHONUNBUFFERED=1
 
-# Экспортируем порт
+# Порт приложения
 EXPOSE 8000
 
 # Запуск приложения

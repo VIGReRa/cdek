@@ -1,8 +1,8 @@
 import os
 from typing import List, Dict
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Chroma
-from langchain.docstore.document import Document
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
 from app.llm_config import get_embeddings
 
 DATA_DIR = "/app/data"
